@@ -9,9 +9,9 @@ double gain = 0.01; //0.01;
 
 // Flywheel control functions
 void setFlywheel() {
-    // R1 forward, R2 disabled
+    // L1 forward, L2 disabled
     // Spins at 10v without TBH
-    flywheel = 127.0 / 12.0 * 10.0 * controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1);
+    flywheel = 127.0 / 12.0 * 10.0 * controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1);
 }
 
 void flywheelTBHLoopOPControl() {
@@ -30,7 +30,7 @@ void flywheelTBHLoopOPControl() {
             prev_error = error;
         }
         
-        if ( controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1) ) {
+        if ( controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1) ) {
             // Set the flywheel motor speeds based on the fw_output voltage
             flywheel.move_velocity(fw_output);
         }
