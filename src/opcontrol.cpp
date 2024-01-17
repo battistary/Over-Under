@@ -1,5 +1,4 @@
 #include "main.h"
-#include "pros/motors.h"
 
 /**
  * Runs the operator control code. This function will be started in its own task
@@ -30,8 +29,8 @@ void opcontrol() {
     pros::Task flywheelTBH(flywheelTBHLoopOPControl);
     pros::Task resetTBH(resetFlywheelTBH);
     pros::Task intake(setIntake);
-    pros::Task lift(setLift);
-    pros::Task wing(setWings);
+//    pros::Task lift(setLift);
+//    pros::Task wing(setWings);
     
     while ( true ) {
         double left = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y) + controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);

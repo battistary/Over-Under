@@ -1,9 +1,5 @@
 #include "main.h"
 
-// -757 first step
-// -630 second step
-// -379 Zimbabwe's cantelope
-
 bool rachet = false;
 bool hold = false;
 

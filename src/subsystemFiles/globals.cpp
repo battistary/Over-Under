@@ -4,7 +4,7 @@
 bool show_logo = true;
 Gif gif("/usd/logo_stretched.gif", lv_scr_act());
 double fw_output = 0.0;
-double target_fw_rpm = 2800.0;
+double target_fw_rpm = 560.0;
 
 // Controllers
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
