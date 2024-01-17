@@ -37,9 +37,6 @@ void opcontrol() {
         double right = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y) - controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);
         driveLeft.move(left);
         driveRight.move(right);
-
-        flywheelTBHLoopOPControl();
-        resetFlywheelTBH();
         pros::delay(10);
     }
 }

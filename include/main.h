@@ -74,7 +74,6 @@ void opcontrol(void);
 #include "gif-pros/gifclass.hpp"
 #include "autoSelect/selection.h"
 #include "subsystemHeaders/globals.hpp"
-#include "subsystemHeaders/drive.hpp"
 #include "subsystemHeaders/flywheel.hpp"
 #include "subsystemHeaders/intake.hpp"
 #include "subsystemHeaders/wings.hpp"
