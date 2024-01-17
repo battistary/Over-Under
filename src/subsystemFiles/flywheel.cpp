@@ -65,14 +65,12 @@ void flywheelTBHLoopAuton() {
 }
 
 void resetFlywheelTBH() {
-    while ( true ) {
-        if ( controller.get_digital(pros::E_CONTROLLER_DIGITAL_Y) ) {
-            flywheel.brake();
-            error = 0.0;
-            prev_error = 0.0;
-            fw_output = 0.0;
-            tbh = 0.0;
-        }
+    if ( controller.get_digital(pros::E_CONTROLLER_DIGITAL_Y) ) {
+        flywheel.brake();
+        error = 0.0;
+        prev_error = 0.0;
+        fw_output = 0.0;
+        tbh = 0.0;
     }
 }
 
