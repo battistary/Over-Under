@@ -33,6 +33,9 @@ void flywheelTBHLoopOPControl() {
         // Set the flywheel motor speeds based on the fw_output voltage
         flywheel.move_velocity(fw_output);
     }
+    else if ( controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2) ) {
+        flywheel.move_velocity(-1 * fw_output);
+    }
     else {
         current_fw_rpm = flywheel.get_actual_velocity();
         fw_output = 0.0;
