@@ -26,8 +26,8 @@ void opcontrol() {
         controller.rumble("-");
     }};
 
-    pros::Task flywheelTBH(flywheelTBHLoopOPControl);
-    pros::Task resetTBH(resetFlywheelTBH);
+//    pros::Task flywheelTBH(flywheelTBHLoopOPControl);
+//    pros::Task resetTBH(resetFlywheelTBH);
     pros::Task intake(setIntake);
 //    pros::Task lift(setLift);
 //    pros::Task wing(setWings);

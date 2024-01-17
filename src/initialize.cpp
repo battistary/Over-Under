@@ -27,8 +27,8 @@ void initialize() {
     driveMiddleRight.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
     driveMiddleLeft.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
 
-    pros::lcd::initialize();                    // Display the default PROS screen on the Brain screen
-    pros::Task screenTask(update_screen); // Create a task to print the position to the screen
+    pros::lcd::initialize();              // Display the default PROS screen on the Brain screen
+    //pros::Task screenTask(update_screen); // Create a task to print the position to the screen
 }
 
 /**
