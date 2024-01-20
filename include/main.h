@@ -34,14 +34,12 @@
  */
 #define PROS_USE_LITERALS
 
-#include "api.h"
-
 /**
  * You should add more #includes here
  */
+#include "api.h"
 #include "lemlib/api.hpp"
-//#include "okapi/api.hpp"
-//#include "pros/api_legacy.h"
+
 
 /**
  * If you find doing pros::Motor() to be tedious and you'd prefer just to do
@@ -72,13 +70,11 @@ void opcontrol(void);
 
 #ifdef __cplusplus
 #include "gif-pros/gifclass.hpp"
-#include "autoSelect/selection.h"
 #include "subsystemHeaders/globals.hpp"
 #include "subsystemHeaders/flywheel.hpp"
 #include "subsystemHeaders/intake.hpp"
 #include "subsystemHeaders/wings.hpp"
 #include "subsystemHeaders/lift.hpp"
-//#include <iostream>
 #endif
 
 #define LIMIT_SWITCH 'D'
