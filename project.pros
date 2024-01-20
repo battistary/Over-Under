@@ -368,7 +368,7 @@
       "after": "screen",
       "description": "2023-2024 VEX competition code",
       "icon": "robot",
-      "slot": 2
+      "slot": 1
     }
   }
 }

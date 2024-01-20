@@ -1,10 +1,12 @@
 #include "main.h"
 
 // Variables
-extern bool show_logo;
-extern Gif gif;
+extern Gif logo;
+extern bool first_run;
 extern double fw_output;
 extern double target_fw_rpm;
+extern bool liftRaised;
+extern int auton;
 
 // Controllers
 extern pros::Controller controller;
@@ -24,11 +26,13 @@ extern pros::Motor intake;
 extern pros::Motor_Group driveLeft;
 extern pros::Motor_Group driveRight;
 
-// Pneumatic Pistons
-extern pros::ADIDigitalOut lift;
-extern pros::ADIDigitalOut wingRight;
+// ADI Digital Outputs
 extern pros::ADIDigitalOut wingLeft;
-extern pros::ADIDigitalOut liftRachet;
+extern pros::ADIDigitalOut wingRight;
+extern pros::ADIDigitalOut liftRachetLeft;
+extern pros::ADIDigitalOut liftRachetRight;
+extern pros::ADIDigitalOut lift;
+// Limit switch in port D
 
 // Inertial Sensor
 extern pros::Imu imu;

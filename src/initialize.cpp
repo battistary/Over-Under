@@ -27,7 +27,8 @@ void initialize() {
     driveMiddleRight.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
     driveMiddleLeft.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
 
-    pros::lcd::initialize();              // Display the default PROS screen on the Brain screen
+    pros::c::adi_pin_mode(LIMIT_SWITCH, INPUT); // Limit switch
+
     //pros::Task screenTask(update_screen); // Create a task to print the position to the screen
 }
 
@@ -36,9 +37,7 @@ void initialize() {
  * the VEX Competition Switch, following either autonomous or opcontrol. When
  * the robot is enabled, this task will exit.
  */
-void disabled() {
-    Gif newGif("/usd/logo_stretched.gif", lv_scr_act());
-}
+void disabled() {}
 
 /**
  * Runs after initialize(), and before autonomous when connected to the Field
@@ -50,6 +49,58 @@ void disabled() {
  * starts.
  */
 void competition_initialize() {
-	gif.clean();
-    selector::init();
+    bool start = true;
+    logo.clean();
+    pros::delay(10);
+    Gif skills("/usd/skills.gif", lv_scr_act());
+    skills.clean();
+    Gif close("/usd/close.gif", lv_scr_act());
+    close.clean();
+    Gif far("/usd/far.gif", lv_scr_act());
+    far.clean();
+
+    while ( true ) {
+        if ( start == true ) {
+            Gif far("/usd/far.gif", lv_scr_act());
+            start = false;
+            pros::delay(750);
+        }
+
+        if ( pros::c::adi_digital_read(LIMIT_SWITCH) == HIGH ) {   
+            auton++;
+
+            if ( auton > 4 ) {
+                auton = 1;
+            }
+
+            if ( auton == 1 ) {
+                skills.clean();
+                pros::delay(10);
+                Gif far("/usd/far.gif", lv_scr_act());
+                pros::delay(750);
+            }
+            
+            else if ( auton == 2 ) {
+                far.clean();
+                pros::delay(10);
+                Gif close("/usd/close.gif", lv_scr_act());
+                pros::delay(750);
+            }
+    
+            else if ( auton == 3 ) {
+                close.clean();
+                pros::delay(10);
+                Gif skills("/usd/skills.gif", lv_scr_act());
+                pros::delay(750);
+            }
+
+            else if ( auton == 4 ) {
+                skills.clean();
+                pros::delay(10);
+                Gif skills("/usd/easter_egg.gif", lv_scr_act());
+                pros::delay(750);
+            }
+        }
+        pros::delay(10);
+    }
 }

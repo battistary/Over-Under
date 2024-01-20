@@ -81,6 +81,6 @@ void opcontrol(void);
 //#include <iostream>
 #endif
 
-#define LIMIT_SWITCH 'A'
+#define LIMIT_SWITCH 'D'
 
 #endif  // _PROS_MAIN_H_

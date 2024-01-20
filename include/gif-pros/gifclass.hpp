@@ -1,6 +1,7 @@
 #pragma once
-#include "api.h"
+#include "liblvgl/lvgl.h"
 #include "gifdec.h"
+#include "pros/rtos.hpp"
 
 /**
  * MIT License
@@ -33,7 +34,7 @@ public:
    * Resumes the GIF task
    */
   void resume();
-  
+
   /**
    * Deletes GIF and frees all allocated memory
    */

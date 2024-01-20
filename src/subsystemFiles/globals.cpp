@@ -1,10 +1,9 @@
 #include "main.h"
 
 // Variables
-bool show_logo = true;
-Gif gif("/usd/logo_stretched.gif", lv_scr_act());
-double fw_output = 0.0;
-double target_fw_rpm = 560.0;
+Gif logo("/usd/logo_stretched.gif", lv_scr_act());
+bool first_run = true;
+int auton = 1;
 
 // Controllers
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
@@ -25,10 +24,12 @@ pros::Motor_Group driveLeft({driveLeftFront, driveLeftBack, driveMiddleLeft});
 pros::Motor_Group driveRight({driveRightFront, driveRightBack, driveMiddleRight});
 
 // ADI Digital Outputs
-pros::ADIDigitalOut lift('A', false);
-pros::ADIDigitalOut wingRight('B', false);
-pros::ADIDigitalOut wingLeft('C', false);
-pros::ADIDigitalOut liftRachet('H', false);
+pros::ADIDigitalOut wingLeft('A', false);
+pros::ADIDigitalOut wingRight('C', false);
+pros::ADIDigitalOut liftRachetLeft('B', false);
+pros::ADIDigitalOut liftRachetRight('E', false);
+pros::ADIDigitalOut lift('F', false);
+// Limit switch in port 'D'
 
 // Inertial Sensor
 pros::Imu imu(17);

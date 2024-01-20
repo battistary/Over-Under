@@ -5,7 +5,7 @@ void setFlywheel();
 
 void flywheelTBHLoopOPControl();
 
-void flywheelTBHLoopAuton();
+void flywheelTBHLoopAuton(uint32_t stop);
 
 void resetFlywheelTBH();
 

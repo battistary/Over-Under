@@ -17,6 +17,12 @@ void turnMoveTo(float x, float y, int turnTimeout, int moveTimeout) {
  * from where it left off.
  */
 void autonomous() {
+    if ( first_run == true ) {
+        Gif matchLogo("/usd/logo_stretched.gif", lv_scr_act());
+        pros::delay(750);
+        first_run = false;
+    }
+
     // Set drivetrain brake mode to brake
     driveLeftFront.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
     driveLeftBack.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
@@ -25,7 +31,7 @@ void autonomous() {
     driveMiddleRight.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
     driveMiddleLeft.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
 
-    if ( selector::auton == 1 || selector::auton == -1 ) {
+    if ( auton == 1 ) {
         /*-----------------*/
         /*  Alliance Side  */
         /*-----------------*/
@@ -62,7 +68,7 @@ void autonomous() {
         //chassis.moveTo(7, -53, 1000, 100);    // Contact elevation bar
     }
 
-    else if ( selector::auton == 2 || selector::auton == -2 ) {
+    else if ( auton == 2 ) {
         /*-----------------*/
         /*  Opponent Side  */
         /*-----------------*/
@@ -105,7 +111,7 @@ void autonomous() {
         //chassis.moveTo(-40, -62, 1000);       // Back up
     }
 
-    else if ( selector::auton == 3 || selector::auton == -3 || selector::auton == 0 ) {
+    else if ( auton == 3 || auton == 4 ) {
         /*-----------------*/
         /*     Skills      */
         /*-----------------*/
@@ -129,8 +135,8 @@ void autonomous() {
         driveMiddleRight.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
         driveMiddleLeft.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 
-        flywheelTBHLoopAuton();                 // Vroom spin whirr zoom whoosh wowie zowie
-        pros::delay(30000);                     // 30s delay
+        uint32_t stop = pros::millis() + 30000;
+        flywheelTBHLoopAuton(stop);      // Vroom spin whirr zoom whoosh wowie zowie
         stopAndResetFlywheelTBH();              // Stop flywheel and reset TBH loop
 
         driveLeft = 0;                          // Stop left drive

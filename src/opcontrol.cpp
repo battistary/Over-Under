@@ -14,6 +14,12 @@
  * task, not resume it from where it left off.
  */
 void opcontrol() {
+    if ( first_run == true ) {
+        Gif matchLogo("/usd/logo_stretched.gif", lv_scr_act());
+        pros::delay(750);
+        first_run = false;
+    }
+    
     driveLeftFront.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
     driveLeftBack.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
     driveRightFront.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
