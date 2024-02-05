@@ -1,15 +1,5 @@
 #include "main.h"
 
-void update_screen() {
-    while (true) {
-        lemlib::Pose pose = chassis.getPose();          // Get the current position of the robot
-        pros::lcd::print(0, "x: %f", pose.x);           // Print the x position
-        pros::lcd::print(1, "y: %f", pose.y);           // Print the y position
-        pros::lcd::print(2, "heading: %f", pose.theta); // Print the heading
-        pros::delay(10);
-    }
-}
-
 /**
  * Runs initialization code. This occurs as soon as the program is started.
  *
@@ -26,10 +16,9 @@ void initialize() {
     driveRightBack.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
     driveMiddleRight.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
     driveMiddleLeft.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+    puncher.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 
     pros::c::adi_pin_mode(LIMIT_SWITCH, INPUT); // Limit switch
-
-    //pros::Task screenTask(update_screen); // Create a task to print the position to the screen
 }
 
 /**
@@ -63,7 +52,7 @@ void competition_initialize() {
         if ( start == true ) {
             Gif far("/usd/far.gif", lv_scr_act());
             start = false;
-            pros::delay(750);
+            pros::delay(800);
         }
 
         if ( pros::c::adi_digital_read(LIMIT_SWITCH) == HIGH ) {   
@@ -77,28 +66,28 @@ void competition_initialize() {
                 skills.clean();
                 pros::delay(10);
                 Gif far("/usd/far.gif", lv_scr_act());
-                pros::delay(750);
+                pros::delay(800);
             }
             
             else if ( auton == 2 ) {
                 far.clean();
                 pros::delay(10);
                 Gif close("/usd/close.gif", lv_scr_act());
-                pros::delay(750);
+                pros::delay(800);
             }
     
             else if ( auton == 3 ) {
                 close.clean();
                 pros::delay(10);
                 Gif skills("/usd/skills.gif", lv_scr_act());
-                pros::delay(750);
+                pros::delay(800);
             }
 
             else if ( auton == 4 ) {
                 skills.clean();
                 pros::delay(10);
                 Gif skills("/usd/easter_egg.gif", lv_scr_act());
-                pros::delay(750);
+                pros::delay(800);
             }
         }
         pros::delay(10);

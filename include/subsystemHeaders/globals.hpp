@@ -1,11 +1,12 @@
 #include "main.h"
 
 // Variables
+extern Gif far;
+extern Gif close;
+extern Gif skills;
+extern Gif easter_egg;
 extern Gif logo;
 extern bool first_run;
-extern double fw_output;
-extern double target_fw_rpm;
-extern bool liftRaised;
 extern int auton;
 
 // Controllers
@@ -19,7 +20,7 @@ extern pros::Motor driveRightFront;
 extern pros::Motor driveMiddleRight;
 extern pros::Motor driveRightBack;
 
-extern pros::Motor flywheel;
+extern pros::Motor puncher;
 extern pros::Motor intake;
 
 // Motor Groups
@@ -29,13 +30,12 @@ extern pros::Motor_Group driveRight;
 // ADI Digital Outputs
 extern pros::ADIDigitalOut wingLeft;
 extern pros::ADIDigitalOut wingRight;
-extern pros::ADIDigitalOut liftRachetLeft;
-extern pros::ADIDigitalOut liftRachetRight;
 extern pros::ADIDigitalOut lift;
 // Limit switch in port D
 
 // Inertial Sensor
 extern pros::Imu imu;
+extern pros::Rotation rotationSensor;
 
 // LemLib chassis object
 extern lemlib::Chassis chassis;

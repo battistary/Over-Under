@@ -9,30 +9,29 @@ int auton = 1;
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
 
 // Motors
-pros::Motor driveLeftFront(11, pros::E_MOTOR_GEARSET_06, true, pros::E_MOTOR_ENCODER_COUNTS);
-pros::Motor driveMiddleLeft(12, pros::E_MOTOR_GEARSET_06, true, pros::E_MOTOR_ENCODER_COUNTS);
-pros::Motor driveLeftBack(13, pros::E_MOTOR_GEARSET_06, true, pros::E_MOTOR_ENCODER_COUNTS);
-pros::Motor driveRightFront(20, pros::E_MOTOR_GEARSET_06, false, pros::E_MOTOR_ENCODER_COUNTS);
-pros::Motor driveMiddleRight(19, pros::E_MOTOR_GEARSET_06, false, pros::E_MOTOR_ENCODER_COUNTS);
-pros::Motor driveRightBack(18, pros::E_MOTOR_GEARSET_06, false, pros::E_MOTOR_ENCODER_COUNTS);
+pros::Motor driveLeftFront(20, pros::E_MOTOR_GEARSET_06, true, pros::E_MOTOR_ENCODER_COUNTS);
+pros::Motor driveMiddleLeft(19, pros::E_MOTOR_GEARSET_06, true, pros::E_MOTOR_ENCODER_COUNTS);
+pros::Motor driveLeftBack(10, pros::E_MOTOR_GEARSET_06, true, pros::E_MOTOR_ENCODER_COUNTS);
+pros::Motor driveRightFront(11, pros::E_MOTOR_GEARSET_06, false, pros::E_MOTOR_ENCODER_COUNTS);
+pros::Motor driveMiddleRight(12, pros::E_MOTOR_GEARSET_06, false, pros::E_MOTOR_ENCODER_COUNTS);
+pros::Motor driveRightBack(1, pros::E_MOTOR_GEARSET_06, false, pros::E_MOTOR_ENCODER_COUNTS);
 
-pros::Motor flywheel(21, pros::E_MOTOR_GEARSET_06, false, pros::E_MOTOR_ENCODER_COUNTS);
-pros::Motor intake(1, pros::E_MOTOR_GEARSET_06, true, pros::E_MOTOR_ENCODER_COUNTS);
+pros::Motor puncher(2, pros::E_MOTOR_GEARSET_06, false, pros::E_MOTOR_ENCODER_COUNTS);
+pros::Motor intake(18, pros::E_MOTOR_GEARSET_06, false, pros::E_MOTOR_ENCODER_COUNTS);
 
 // Motor Groups
 pros::Motor_Group driveLeft({driveLeftFront, driveLeftBack, driveMiddleLeft});
 pros::Motor_Group driveRight({driveRightFront, driveRightBack, driveMiddleRight});
 
 // ADI Digital Outputs
-pros::ADIDigitalOut wingLeft('A', false);
-pros::ADIDigitalOut wingRight('C', false);
-pros::ADIDigitalOut liftRachetLeft('B', false);
-pros::ADIDigitalOut liftRachetRight('E', false);
-pros::ADIDigitalOut lift('F', false);
+pros::ADIDigitalOut wingRight('A', false);
+pros::ADIDigitalOut wingLeft('B', false);
+pros::ADIDigitalOut lift('C', false);
 // Limit switch in port 'D'
 
-// Inertial Sensor
-pros::Imu imu(17);
+// Sensors
+pros::Imu imu(13);
+pros::Rotation rotationSensor(8);
 
 // Drivetrain struct
 lemlib::Drivetrain_t drivetrain {
