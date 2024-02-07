@@ -10,11 +10,6 @@ void update_screen() {
     }
 }
 
-void turnMoveTo(float x, float y, int turnTimeout, int moveTimeout) {
-    chassis.turnTo(x, y, turnTimeout);
-    chassis.moveTo(x, y, moveTimeout);
-}
-
 /**
  * Runs the user autonomous code. This function will be started in its own task
  * with the default priority and stack size whenever the robot is enabled via
@@ -45,52 +40,49 @@ void autonomous() {
 
         // First three triballs
         chassis.setPose(12, -60, 270);          // Start
-        chassis.moveTo(7, -60, 300);            // Move slightly foreward towards first triball
+        chassis.moveTo(6, -60, 300);            // Move slightly foreward towards first triball
         intake.move(127);                       // Drop intake
         pros::delay(500);                       // Grab 1st triball
-        chassis.moveTo(38, -60, 500);           // Move towards match load zone & push preload
-        chassis.moveTo(34, -60, 200);           // Make room for turn
-        chassis.turnTo(26, -46, 200);           // Turn to prepare to knock out match load triball
-        chassis.turnTo(44, -60, 300);           // Turn to face goal
+        chassis.moveTo(34, -60, 700);           // Move towards match load zone & push preload
         wingLeft.set_value(1);                  // Extend left wing
         chassis.moveTo(41, -60, 500);           // Align to knock out match load triball
-        chassis.moveTo(54, -54, 500);           // Align to knock out match load triball
+        chassis.moveTo(55, -53, 500);           // Align to knock out match load triball
         wingRight.set_value(1);                 // Extend right wing
-        chassis.turnTo(63, -20, 300);           // Push out match load triball
+        chassis.turnTo(63, -72, 400, false, 80);           // Push out match load triball
+        chassis.turnTo(63, -24, 500);           // Turn to goal
         wingRight.set_value(0);                 // Retract right wing
-        pros::delay(500);                       // Wait 500 milliseconds
-        intake.move(-127);                      // Push out triball in intake
-        turnMoveTo(61, -45, 300, 500);          // Turn and move to align better for ram
-        chassis.turnTo(61, -26, 300);           // Turn to align better for ram
         wingLeft.set_value(0);                  // Retract left wing
-        pros::delay(300);                       // Wait 250 milliseconds
-        chassis.moveTo(61, -26, 500);           // Ram first three triballs with vigor
-        pros::delay(100);                       // Wait 100 milliseconds
-        chassis.moveTo(61, -40, 300);           // Back up from goal
-        chassis.moveTo(61, -26, 500);           // Ram first three triballs with vigor
-        pros::delay(100);                       // Wait 100 milliseconds
+        chassis.turnTo(70, -39, 500);           // Turn to align better for ram
+        chassis.moveTo(70, -39, 500);           // Move to align better for ram
+        chassis.turnTo(70, 0, 500);             // Turn for ram
+        intake.move(-127);                      // BLAUUGGH -> spit triball
+        pros::delay(500);                       // Wait 500 milliseconds
+        chassis.moveTo(70, 0, 600);             // Ram first three triballs with vigor
+        chassis.moveTo(70, -40, 600);           // Back up from goal
 
         // Last three triballs
-        chassis.moveTo(61, -40, 300);           // Back up from goal
         chassis.turnTo(34, -34, 300);           // Turn to point towards 4th triball
         chassis.moveTo(34, -34, 800);           // Move towards 4th triball
-        chassis.turnTo(10, -25, 300);           // Turn to adjust angle
+        chassis.turnTo(10, -23, 300);           // Turn to adjust angle
         intake.move(127);                       // Spin intake
-        chassis.moveTo(10, -25, 700);           // Move to 4th triball
+        chassis.moveTo(10, -23, 700);           // Move to 4th triball
         pros::delay(300);                       // Grabby grabby triball
         chassis.turnTo(17, -18, 300);           // Turn to align for 5th triball
         chassis.moveTo(17, -18, 700);           // Move to align for 5th triball
         chassis.turnTo(47, -14, 300);           // Turn to spit out 4th triball towards goal
         intake.move(-127);                      // BLAUUGGH -> spit triball
-        pros::delay(500);                       // Wait 500 milliseconds
+        pros::delay(400);                       // Wait 400 milliseconds
         intake.move(0);                         // Stop intake
         chassis.turnTo(3, -2, 300);             // Turn towards 5th triball
         intake.move(127);                       // Spin intake
         chassis.moveTo(3, -2, 800);             // Intake 5th triball
-        chassis.turnTo(47, -2, 300);            // Turn to face goal
+        chassis.turnTo(47, -2, 500);            // Turn to face away from goal
+        intake.move(-127);                      // Spit out 5th triball
+        pros::delay(400);                       // BLAUUGGH 2 -> spit 2nd triball
+        intake.move(0);                         // Stop intake
+        chassis.turnTo(-72, -2, 800);           // Turn to face away from goal
         wingLeft.set_value(1);                  // Extend left wing
         wingRight.set_value(1);                 // Extend right wing
-        intake.move(-127);                      // Spit out 5th triball
         chassis.moveTo(47, -2, 800);            // Ram last three triballs into goal
         chassis.moveTo(20, -2, 800);            // Back up from goal
     }
@@ -101,27 +93,28 @@ void autonomous() {
         /*----------------------------*/
 
         // Clear match load triball
-        chassis.setPose(-45, -63, 315);         // Start
-        wingLeft.set_value(1);                  // Extend wing
+        chassis.setPose(-48, -60, 135);         // Start
+        wingRight.set_value(1);                 // Extend wing
         pros::delay(500);                       // Wait 500 milliseconds
-        chassis.turnTo(-62, -62, 500);          // Turn towards goal
+        chassis.turnTo(72, -60, 500);           // Turn to knock out triball
         pros::delay(500);                       // Wait 500 milliseconds
-        wingLeft.set_value(0);                  // Retract wing
-        chassis.moveTo(-38, -65, 500);          // Align for move towards middle
+        wingRight.set_value(0);                 // Retract wing
+        //chassis.moveTo(-38, -65, 500);        // Align for move towards middle
 
         // Go for middle triball
         intake.move(127);                       // Spin intake
-        chassis.turnTo(-29, -13, 1000);         // Turn towards middle triball
-        chassis.moveTo(-27, -13, 3500, 100);    // Drive to middle triball
+        chassis.turnTo(-33, -13, 1000);         // Turn towards middle triball
+        chassis.moveTo(-33, -13, 3500, 100);    // Drive to middle triball
 
         // Move back, shoot, & contact elevation bar
-        chassis.moveTo(-38, -65, 3500, 100);    // Move back from middle
-        chassis.turnTo(0, -65, 750);            // Turn
+        chassis.turnTo(-48, -60, 400);
+        chassis.moveTo(-48, -60, 2000, 100);    // Move back from middle
+        chassis.turnTo(0, -60, 750);            // Turn
         intake.move(-127);                      // Shoot triball across
         pros::delay(500);                       // Delay
         intake.move(0);                         // Stop intake
-        chassis.turnTo(-72, -65, 750);          // Turn 180 degrees
-        chassis.moveTo(-10, -65, 1500);         // Contact elevation bar
+        chassis.turnTo(-72, -60, 750);          // Turn 180 degrees
+        chassis.moveTo(0, -60, 1500, 100);      // Contact elevation bar
     }
 
     else if ( auton == 3 || auton == 4 ) {
@@ -134,12 +127,11 @@ void autonomous() {
             launchTime = 2000;
         }
 
-        // Pre loads
+        // Score Preloads
         chassis.setPose(49, 58, 135);           // Start
         chassis.moveTo(60, 47, 500);            // Move diagonally to align with goal
         chassis.turnTo(60, 31, 300);            // Turn towards goal
         chassis.moveTo(60, 20, 1000);           // Ram 1st two triballs into goal
-        //chassis.setPose(60, 31, 180);           // Set position after ram
 
         // Match loads
         chassis.moveTo(60, 55, 750);            // Move in front of match-loading position
@@ -158,7 +150,6 @@ void autonomous() {
         pros::delay(launchTime);              // 30 second delay
         puncher = 0;                          // Stop puncher
         
-
         while ( rotationSensor.get_angle() < 30000 ) {      // While puncher is too high
             puncher = 127;                                  // Lower puncher
         }
@@ -167,7 +158,7 @@ void autonomous() {
         }
         puncher = 0;                                        // Stop puncher
 
-        wingRight.set_value(0);
+        wingRight.set_value(0);                             // Retract right wing
 
         // Set drivetrain brake mode to brake
         driveLeftFront.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
@@ -177,6 +168,8 @@ void autonomous() {
         driveMiddleRight.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
         driveMiddleLeft.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
 
+        chassis.setPose(54, 54, 244.7);         // setPose after match loads (puncher causes error in IMEs)
+
         chassis.moveTo(51, 51, 500);            // Move away from match load bar
         chassis.turnTo(66, 37, 400);            // Turn for crossing alignment
         chassis.moveTo(36, 65, 1000);           // Move for crossing alignment
@@ -184,11 +177,70 @@ void autonomous() {
         chassis.moveTo(-26, 55, 1500);          // Cross field
 
         // 1st ram set
-        chassis.turnTo(-12, 73, 1000);           // Turn to pass cross bar
-        chassis.moveTo(-42, 45, 1000);           // Move parallel with cross bar
-        chassis.turnTo(-77, 60, 1000);           // Turn towards middle
-        chassis.moveTo(-7, 33, 1000);            // Move towards middle
-        chassis.turnTo(-14, 55, 1000);         // Turn to move to align for ram
+        chassis.turnTo(-6, 69, 1000);           // Turn to pass cross bar
+        chassis.moveTo(-46, 41, 1000);          // Move parallel with cross bar
+        chassis.turnTo(-77, 60, 1000);          // Turn towards middle
+        chassis.moveTo(-14, 33, 1000);          // Move towards middle
+        wingRight.set_value(1);                 // Extend right wing
+        chassis.turnTo(0, 42, 500);             // Turn to ram
+        chassis.moveTo(-42, 15, 1000);          // Ram
+        wingRight.set_value(0);                 // Retract right wing
+        chassis.moveTo(-14, 33, 1000);          // Back up
+
+        // 2nd ram set
+        wingRight.set_value(1);                 // Extend right wing
+        chassis.turnTo(-15, 72, 500);           // Turn to align for next ram
+        wingLeft.set_value(1);                  // Extend left wing
+        chassis.moveTo(-15, 2, 750);            // Move to align for next ram
+        chassis.turnTo(72, 2, 500);             // Turn for ram
+        puncher = 127;                          // Punch
+        wingLeft.set_value(1);                  // Extend left wing
+        pros::delay(500);                       // 600 millisecond delay
+        puncher = 0;                            // Stop puncher
+        chassis.moveTo(-72, 2, 1000);           // Ram 
+        chassis.moveTo(-16, 2, 1000);           // Back up
+        wingLeft.set_value(0);                  // Retract left wing
+        wingRight.set_value(0);                 // Retract right wing
+
+        // 3rd ram set 
+        chassis.turnTo(-16, 50, 500);           // Turn for next ram
+        chassis.moveTo(-16, -10, 750);          // Move to align for ram
+        wingRight.set_value(1);                 // Extend right wing
+        chassis.turnTo(72, -10, 500);           // Turn for ram
+        wingLeft.set_value(1);                  // Extend left wing
+        chassis.moveTo(-72, -10, 1000);         // Ram
+        chassis.moveTo(-16, -10, 1000);         // Back up
+        
+        // 4th ram set
+        chassis.turnTo(-2, 5, 500);            // Turn for next ram
+        
+        // Fix!
+        /*chassis.moveTo(-30, -25, 750);          // Move to align for ram
+        wingLeft.set_value(0);                  // Retract left wing
+        wingRight.set_value(0);                 // Retract right wing
+        pros::delay(200);                       // Wait 200 milliseconds
+        chassis.moveTo(-36, -36, 500);          // Keep moving to align for ram
+        wingLeft.set_value(1);                  // Extend left wing
+        wingRight.set_value(1);                 // Extend right wing
+        chassis.turnTo(-32, -12, 500);          // Turn to move to ram
+        chassis.moveTo(-40, -60, 750);          // Move for ram
+        wingRight.set_value(0);                 // Retract right wing
+        chassis.turnTo(-22, -72, 500);          // Turn for ram
+        chassis.moveTo(-58, -48, 750);          // Move for ram
+        chassis.turnTo(-58, -72, 500);          // Turn for ram
+        chassis.moveTo(-58, 0, 1000);           // RAM!!!
+        chassis.moveTo(-58, -48, 1000);         // Back up*/
+
+        // Hang
+        /*turnMoveTo(-51, -52, 500, 1000);
+        turnMoveTo(-34, -61, 500, 1000);
+        chassis.turnTo(5, -61, 500);
+        lift.set_value(1);
+        chassis.moveTo(5, -61, 1000, 1000);
+        lift.set_value(0);*/
+
+        /*
+        chassis.turnTo(-14, 55, 1000);           // Turn to move to align for ram
         chassis.moveTo(-14, 12, 1000);           // Move to align for ram
         chassis.turnTo(60, 12, 1000);            // Turn to align for ram
         wingRight.set_value(1);
@@ -232,6 +284,7 @@ void autonomous() {
         chassis.turnTo(-65, 0, 1000);           // Ram
         chassis.moveTo(-65, 0, 1000);
         chassis.moveTo(-44, -52, 1000);
+        */
     }
 
     /*if ( first_run == true ) {
