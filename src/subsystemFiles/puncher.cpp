@@ -12,10 +12,10 @@ void setPuncher() {
             while ( controller.get_digital(pros::E_CONTROLLER_DIGITAL_A) ) {
                 puncher = 127;
             }
-            while ( rotationSensor.get_angle() < 25000 ) {
+            while ( rotationSensor.get_angle() < 35000 ) {
                 puncher = 127;
             }
-            while ( rotationSensor.get_angle() > 25000 ) {
+            while ( rotationSensor.get_angle() > 35000 ) {
                 puncher = 127;
             }
             puncher = 0;
