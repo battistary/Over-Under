@@ -28,8 +28,10 @@ extern pros::Motor_Group driveLeft;
 extern pros::Motor_Group driveRight;
 
 // ADI Digital Outputs
-extern pros::ADIDigitalOut wingLeft;
-extern pros::ADIDigitalOut wingRight;
+extern pros::ADIDigitalOut wingBackLeft;
+extern pros::ADIDigitalOut wingBackRight;
+extern pros::ADIDigitalOut wingFrontLeft;
+extern pros::ADIDigitalOut wingFrontRight;
 extern pros::ADIDigitalOut lift;
 // Limit switch in port D
 

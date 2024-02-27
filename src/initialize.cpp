@@ -58,7 +58,7 @@ void competition_initialize() {
         if ( pros::c::adi_digital_read(LIMIT_SWITCH) == HIGH ) {   
             auton++;
 
-            if ( auton > 4 ) {
+            if ( auton > 5 ) {
                 auton = 1;
             }
 
@@ -87,6 +87,13 @@ void competition_initialize() {
                 skills.clean();
                 pros::delay(10);
                 Gif skills("/usd/easter_egg.gif", lv_scr_act());
+                pros::delay(800);
+            }
+
+            else if ( auton == 5 ) {
+                close.clean();
+                pros::delay(10);
+                Gif skills("/usd/skills.gif", lv_scr_act());
                 pros::delay(800);
             }
         }

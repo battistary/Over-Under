@@ -31,6 +31,19 @@ void opcontrol() {
     pros::Task lift(setLift);
     pros::Task wing(setWings);
     
+    //auton = 5;
+    if (auton == 5) {
+        // Score Preloads
+        chassis.setPose(49, 58, 135);           // Start
+        chassis.moveTo(60, 47, 500);            // Move diagonally to align with goal
+        chassis.turnTo(60, 31, 300);            // Turn towards goal
+        chassis.moveTo(60, 20, 1000);           // Ram 1st two triballs into goal
+
+        // Match loads
+        chassis.moveTo(60, 55, 750);            // Move in front of match-loading position
+        chassis.turnTo(-45, 10, 500);           // Turn to face opposite goal
+        wingBackRight.set_value(1);             // Extend right wing
+    }
     while ( true ) {
         double left = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y) + controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);
         double right = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y) - controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);
