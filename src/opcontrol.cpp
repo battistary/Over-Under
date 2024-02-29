@@ -31,7 +31,6 @@ void opcontrol() {
     pros::Task lift(setLift);
     pros::Task wing(setWings);
     
-    //auton = 5;
     if (auton == 5) {
         // Score Preloads
         chassis.setPose(49, 58, 135);           // Start
