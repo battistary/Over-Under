@@ -9,6 +9,7 @@
 void initialize() {
 	chassis.calibrate(); // Calibrate the chassis
     chassis.setPose(0, 0, 0); // X: 0, Y: 0, Heading: 0
+    controller.set_text(1, 0, "Hi Preston!");
 
     driveLeftFront.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
     driveLeftBack.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
@@ -39,18 +40,19 @@ void disabled() {}
  */
 void competition_initialize() {
     bool start = true;
-    logo.clean();
+    activeGif.clean();
     pros::delay(10);
-    Gif skills("/usd/skills.gif", lv_scr_act());
+    static Gif skills("/usd/skills.gif", lv_scr_act());
     skills.clean();
-    Gif close("/usd/close.gif", lv_scr_act());
+    static Gif close("/usd/close.gif", lv_scr_act());
     close.clean();
-    Gif far("/usd/far.gif", lv_scr_act());
+    static Gif far("/usd/far.gif", lv_scr_act());
     far.clean();
 
     while ( true ) {
         if ( start == true ) {
-            Gif far("/usd/far.gif", lv_scr_act());
+            static Gif far("/usd/far.gif", lv_scr_act());
+            activeGif = far;
             start = false;
             pros::delay(800);
         }
@@ -65,35 +67,38 @@ void competition_initialize() {
             if ( auton == 1 ) {
                 skills.clean();
                 pros::delay(10);
-                Gif far("/usd/far.gif", lv_scr_act());
+                static Gif far("/usd/far.gif", lv_scr_act());
+                activeGif = far;
                 pros::delay(800);
             }
             
             else if ( auton == 2 ) {
                 far.clean();
                 pros::delay(10);
-                Gif close("/usd/close.gif", lv_scr_act());
+                static Gif close("/usd/close.gif", lv_scr_act());
+                activeGif = close;
                 pros::delay(800);
             }
     
             else if ( auton == 3 ) {
                 close.clean();
                 pros::delay(10);
-                Gif skills("/usd/skills.gif", lv_scr_act());
+                static Gif skills("/usd/skills.gif", lv_scr_act());
+                activeGif = skills;
                 pros::delay(800);
             }
 
             else if ( auton == 4 ) {
                 skills.clean();
                 pros::delay(10);
-                Gif skills("/usd/easter_egg.gif", lv_scr_act());
+                static Gif skills("/usd/easter_egg.gif", lv_scr_act());
                 pros::delay(800);
             }
 
             else if ( auton == 5 ) {
                 close.clean();
                 pros::delay(10);
-                Gif skills("/usd/skills.gif", lv_scr_act());
+                static Gif skills("/usd/skills.gif", lv_scr_act());
                 pros::delay(800);
             }
         }

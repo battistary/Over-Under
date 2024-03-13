@@ -10,104 +10,50 @@ bool backPushBotMode = false;
 void setWings() {
     while ( true ) {
         // Back Left Wing
-        if ( controller.get_digital(pros::E_CONTROLLER_DIGITAL_LEFT) ) {
-            if ( leftBackWing == false ) {
-                wingBackLeft.set_value(1);
-                leftBackWing = true;
-                pros::delay(250);
-            }
-            else {
-                wingBackLeft.set_value(0);
-                leftBackWing = false;
-                pros::delay(250);
-            }
+        if ( controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_LEFT) ) {
+            wingBackLeft.set_value(!leftBackWing);
+            leftBackWing = !leftBackWing;
         }
 
         // Back Right Wing
-        if ( controller.get_digital(pros::E_CONTROLLER_DIGITAL_RIGHT) ) {
-            if ( rightBackWing == false ) {
-                wingBackRight.set_value(1);
-                rightBackWing = true;
-                pros::delay(250);
-            }
-            else {
-                wingBackRight.set_value(0);
-                rightBackWing = false;
-                pros::delay(250);
-            }
+        if ( controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_RIGHT) ) {
+            wingBackRight.set_value(!rightBackWing);
+            rightBackWing = !rightBackWing;
         }
 
         // Both Back Wings (Back Pushbot Mode)
-        if ( controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2) ) {
-            if ( backPushBotMode == false ) {
-                wingBackRight.set_value(1);
-                wingBackLeft.set_value(1);
-                backPushBotMode = true;
-                leftBackWing = true;
-                rightBackWing = true;
-                pros::delay(250);
-            }
-            else {
-                wingBackRight.set_value(0);
-                wingBackLeft.set_value(0);
-                backPushBotMode = false;
-                leftBackWing = false;
-                rightBackWing = false;
-                pros::delay(250);
-            }
+        if ( controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L2) ) {
+            wingBackLeft.set_value(!backPushBotMode);
+            wingBackRight.set_value(!backPushBotMode);
+            leftBackWing = !backPushBotMode;
+            rightBackWing = !backPushBotMode;
+            backPushBotMode = !backPushBotMode;
         }
 
         // Front Left Wing
-        if ( controller.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN) ) {
-            if ( leftFrontWing == false ) {
-                wingFrontLeft.set_value(1);
-                leftFrontWing = true;
-                pros::delay(250);
-            }
-            else {
-                wingFrontLeft.set_value(0);
-                leftFrontWing = false;
-                pros::delay(250);
-            }
+        if ( controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_DOWN) ) {
+            wingFrontLeft.set_value(!leftFrontWing);
+            leftFrontWing = !leftFrontWing;
         }
 
         // Front Right Wing
-        if ( controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP) ) {
-            if ( rightFrontWing == false ) {
-                wingFrontRight.set_value(1);
-                rightFrontWing = true;
-                pros::delay(250);
-            }
-            else {
-                wingFrontRight.set_value(0);
-                rightFrontWing = false;
-                pros::delay(250);
-            }
+        if ( controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_UP) ) {
+            wingFrontRight.set_value(!rightFrontWing);
+            rightFrontWing = !rightFrontWing;
         }
 
         // Both Front Wings (Front Pushbot Mode)
-        if ( controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1) ) {
-            if ( frontPushBotMode == false ) {
-                wingFrontRight.set_value(1);
-                wingFrontLeft.set_value(1);
-                frontPushBotMode = true;
-                leftFrontWing = true;
-                rightFrontWing = true;
-                pros::delay(250);
-            }
-            else {
-                wingFrontRight.set_value(0);
-                wingFrontLeft.set_value(0);
-                frontPushBotMode = false;
-                leftFrontWing = false;
-                rightFrontWing = false;
-                pros::delay(250);
-            }
+        if ( controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L1) ) {
+            wingFrontLeft.set_value(!frontPushBotMode);
+            wingFrontRight.set_value(!frontPushBotMode);
+            leftFrontWing = !frontPushBotMode;
+            rightFrontWing = !frontPushBotMode;
+            frontPushBotMode = !frontPushBotMode;
         }
 
         // TRUE PUSHBOT MODE (Beyblade Mode)
-        if ( controller.get_digital(pros::E_CONTROLLER_DIGITAL_X) ) {
-            if ( backPushBotMode == false && frontPushBotMode ) {
+        if ( controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_X) ) {
+            if ( backPushBotMode == false || frontPushBotMode == false ) {
                 wingBackRight.set_value(1);
                 wingBackLeft.set_value(1);
                 wingFrontRight.set_value(1);
@@ -118,7 +64,6 @@ void setWings() {
                 rightBackWing = true;
                 leftFrontWing = true;
                 rightFrontWing = true;
-                pros::delay(250);
             }
             else {
                 wingBackRight.set_value(0);
@@ -131,8 +76,8 @@ void setWings() {
                 rightFrontWing = true;
                 leftBackWing = false;
                 rightBackWing = false;
-                pros::delay(250);
             }
         }
+        pros::delay(10);
     }
 }

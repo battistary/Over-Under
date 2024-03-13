@@ -14,16 +14,24 @@
  * task, not resume it from where it left off.
  */
 void opcontrol() {
-    driveLeftFront.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
-    driveLeftBack.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
-    driveRightFront.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
-    driveRightBack.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
-    driveMiddleRight.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
-    driveMiddleLeft.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+    pros::Task setLogo {[=] {
+        if ( first_run == true ) {
+            activeGif.clean();
+            pros::delay(10);
+            static Gif matchLogo("/usd/logo_stretched.gif", lv_scr_act());
+            pros::delay(800);
+            first_run = false;
+        }
+    }};
+
+    driveLeft.set_brake_modes(pros::E_MOTOR_BRAKE_COAST);
+    driveRight.set_brake_modes(pros::E_MOTOR_BRAKE_COAST);
+    controller.set_text(1, 0, "Objective: Win");
 
     pros::Task endgameRumble {[=] {
         pros::delay(88000);
         controller.rumble("-");
+        controller.set_text(1, 0, "Hang time!");
     }};
 
     pros::Task punch(setPuncher);
@@ -34,20 +42,24 @@ void opcontrol() {
     if (auton == 5) {
         // Score Preloads
         chassis.setPose(49, 58, 135);           // Start
-        chassis.moveTo(60, 47, 500);            // Move diagonally to align with goal
+        chassis.moveToPoint(60, 47, 500);       // Move diagonally to align with goal
         chassis.turnTo(60, 31, 300);            // Turn towards goal
-        chassis.moveTo(60, 20, 1000);           // Ram 1st two triballs into goal
+        chassis.moveToPoint(60, 20, 1000);      // Ram 1st two triballs into goal
 
         // Match loads
-        chassis.moveTo(60, 55, 750);            // Move in front of match-loading position
+        chassis.moveToPoint(60, 55, 750);       // Move in front of match-loading position
         chassis.turnTo(-45, 10, 500);           // Turn to face opposite goal
         wingBackRight.set_value(1);             // Extend right wing
     }
     while ( true ) {
-        double left = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y) + controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);
+        int leftY = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
+        int rightX = controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);
+        chassis.arcade(leftY, rightX, 2.7);
+
+        /*double left = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y) + controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);
         double right = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y) - controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);
         driveLeft.move(left);
-        driveRight.move(right);
+        driveRight.move(right);*/
         pros::delay(10);
     }
 }

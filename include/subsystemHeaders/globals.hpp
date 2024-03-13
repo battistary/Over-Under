@@ -1,11 +1,7 @@
 #include "main.h"
 
 // Variables
-extern Gif far;
-extern Gif close;
-extern Gif skills;
-extern Gif easter_egg;
-extern Gif logo;
+extern Gif activeGif;
 extern bool first_run;
 extern int auton;
 

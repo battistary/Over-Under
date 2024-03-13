@@ -1,7 +1,8 @@
 #include "main.h"
 
 // Variables
-Gif logo("/usd/logo_stretched.gif", lv_scr_act());
+static Gif logo("/usd/logo_stretched.gif", lv_scr_act());
+Gif activeGif = logo;
 bool first_run = true;
 int auton = 1;
 
@@ -24,10 +25,10 @@ pros::Motor_Group driveLeft({driveLeftFront, driveLeftBack, driveMiddleLeft});
 pros::Motor_Group driveRight({driveRightFront, driveRightBack, driveMiddleRight});
 
 // ADI Digital Outputs
-pros::ADIDigitalOut wingBackRight('A', false);
-pros::ADIDigitalOut wingBackLeft('B', false);
-pros::ADIDigitalOut wingFrontRight('F', false);
+pros::ADIDigitalOut wingBackLeft('A', false);
+pros::ADIDigitalOut wingBackRight('B', false);
 pros::ADIDigitalOut wingFrontLeft('E', false);
+pros::ADIDigitalOut wingFrontRight('F', false);
 pros::ADIDigitalOut lift('C', false);
 // Limit switch in port 'D'
 
@@ -36,44 +37,49 @@ pros::Imu imu(11);
 pros::Rotation rotationSensor(16);
 
 // Drivetrain struct
-lemlib::Drivetrain_t drivetrain {
+lemlib::Drivetrain drivetrain(
     &driveLeft,     // left drivetrain motors
     &driveRight,    // right drivetrain motors
     11,             // 11" track width
-    2.75,           // 2.75" wheel diameter
-    450             // 450 RPM drivetrain
-};
+    lemlib::Omniwheel::NEW_275,  // 2.75" wheel diameter
+    450,             // 450 RPM drivetrain
+    2
+);
+
+// Lateral motion controller
+lemlib::ControllerSettings lateralController(
+    20,     // kP
+    0,      // kI
+    20,     // kD
+    0,      // anti windup
+    1,      // smallErrorRange
+    100,    // smallErrorTimeout
+    3,      // largeErrorRange
+    500,    // largeErrorTimeout
+    26      // slew rate (max acceleration)
+);
+ 
+// Angular motion controller
+lemlib::ControllerSettings angularController(
+    5,      // kP
+    0,      // kI
+    47,     // kD
+    3,      // anti windup
+    1,      // smallErrorRange
+    100,    // smallErrorTimeout
+    3,      // largeErrorRange
+    500,    // largeErrorTimeout
+    0       // slew rate (max acceleration)
+);
 
 // Odometry struct
-lemlib::OdomSensors_t sensors {
+lemlib::OdomSensors sensors(
     nullptr, // N/A - vertical tracking wheel 1
     nullptr, // N/A - vertical tracking wheel 2
     nullptr, // N/A - horizontal tracking wheel 1
     nullptr, // N/A - hortizontal tracking wheel 2
     &imu     // inertial sensor
-};
-
-// Forward/backward PID
-lemlib::ChassisController_t lateralController {
-    8,      // kP
-    30,     // kD
-    1,      // smallErrorRange
-    100,    // smallErrorTimeout
-    3,      // largeErrorRange
-    500,    // largeErrorTimeout
-    5       // slew rate
-};
- 
-// Turning PID
-lemlib::ChassisController_t angularController {
-    4,      // kP
-    40,     // kD
-    1,      // smallErrorRange
-    100,    // smallErrorTimeout
-    3,      // largeErrorRange
-    500,    // largeErrorTimeout
-    0       // slew rate
-};
+);
 
 // Create chassis object
 lemlib::Chassis chassis(drivetrain, lateralController, angularController, sensors);
